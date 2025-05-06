@@ -1,0 +1,34 @@
+<h1 class="mb-4">Movies</h1>
+
+<table class="table table-striped table-bordered">
+  <thead class="table-dark">
+    <tr>
+      <th>Title</th>
+      <th>Year</th>
+      <th>Genres</th>
+      <th>Average Rating (Reviews)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @movies.each do |movie| %>
+      <tr>
+        <td><%= link_to movie.title, movie_path(movie) %></td>
+        <td><%= movie.year %></td>
+        <td>
+          <% if movie.genres.any? %>
+            <%= movie.genres.map(&:name).join(" / ") %>
+          <% else %>
+            <span class="text-muted">No genres</span>
+          <% end %>
+        </td>
+        <td>
+          <% if movie.try(:average_rating) %>
+            <%= number_with_precision(movie.average_rating, precision: 1) %> (<%= movie.reviews_count %>)
+          <% else %>
+            <span class="text-muted">N/A (0)</span>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

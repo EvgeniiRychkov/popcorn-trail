@@ -1,11 +1,9 @@
 class MoviesController < ApplicationController
   def index
     @movies = Movie
-      .includes(:genres)
-      .left_joins(:reviews)
-      .select("movies.*, AVG(reviews.rating) AS average_rating, COUNT(reviews.id) AS reviews_count")
-      .group("movies.id")
-      .order(Arel.sql("average_rating DESC NULLS LAST"))
+    .includes(:genres)
+    .order(average_rating: :desc)
+    .limit(100)
   end
 
   def show

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_05_172623) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_24_201931) do
   create_table "genres", force: :cascade do |t|
     t.string "name"
   end
@@ -28,6 +28,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_05_172623) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "year"
+    t.float "average_rating", default: 0.0, null: false
+    t.integer "ratings_count", default: 0, null: false
+    t.integer "ratings_sum", default: 0, null: false
   end
 
   create_table "reviews", force: :cascade do |t|

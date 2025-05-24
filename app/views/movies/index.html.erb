@@ -23,7 +23,7 @@
         </td>
         <td>
           <% if movie.try(:average_rating) %>
-            <%= number_with_precision(movie.average_rating, precision: 1) %> (<%= movie.reviews_count %>)
+            <%= number_with_precision(movie.average_rating, precision: 1) %> (<%= movie.ratings_count %>)
           <% else %>
             <span class="text-muted">N/A (0)</span>
           <% end %>

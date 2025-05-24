@@ -1,0 +1,44 @@
+<%= link_to '← Back', movies_path, class: 'btn btn-secondary mb-3' %>
+
+<h2><%= @movie.title %> (<%= @movie.year %>)</h2>
+
+<p><strong>Average Rating:</strong>
+  <% if @movie.reviews.any? %>
+    <%= number_with_precision(@movie.reviews.average(:rating), precision: 1) %> (<%= @movie.reviews.count %>)
+  <% else %>
+    N/A
+  <% end %>
+</p>
+
+<h3>Rating Breakdown</h3>
+
+<% total_reviews = @rating_breakdown.values.sum %>
+
+<div class="d-flex flex-column">
+  <% (10).downto(1) do |rating| %>
+    <% count = @rating_breakdown[rating] || 0 %>
+    <% percentage = total_reviews > 0 ? (count.to_f / total_reviews * 100).round : 0 %>
+
+    <div class="d-flex align-items-center mb-2">
+      <strong class="me-2" style="width: 30px;"><%= rating %>:</strong>
+      <div class="progress" style="width: 200px; height: 20px;">
+        <div class="progress-bar" role="progressbar" style="width: <%= percentage %>%" aria-valuenow="<%= percentage %>" aria-valuemin="0" aria-valuemax="100">
+          <%= percentage %>%
+        </div>
+      </div>
+      <span class="ms-2"><%= count %></span>
+    </div>
+  <% end %>
+</div>
+
+<hr>
+
+<h3>Reviews</h3>
+<%= link_to 'Write a Review', new_movie_review_path(@movie), class: 'btn btn-primary mb-3' %>
+
+<% @reviews.each do |review| %>
+  <div class="mb-3">
+    <div><strong><%= review.user.name %></strong>, rating: <%= review.rating %>, <%= review.created_at.strftime("%B %d, %Y") %></div>
+    <div><%= simple_format(review.text) %></div>
+  </div>
+<% end %>

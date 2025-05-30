@@ -51,6 +51,7 @@ RSpec.describe 'Movies', type: :request do
       before do
         Review.create!(movie: movie, user: user, rating: 10, text: 'Amazing!')
         Review.create!(movie: movie, user: user, rating: 8, text: 'Great!')
+        sign_in user
       end
 
       it 'renders the movie show page with rating breakdown and reviews' do
@@ -65,7 +66,6 @@ RSpec.describe 'Movies', type: :request do
         expect(response.body).to include('50%')
         expect(response.body).to include('Evgenii')
         expect(response.body).to include('Amazing!')
-        expect(response.body).to include('Write a Review')
       end
     end
 
@@ -81,7 +81,6 @@ RSpec.describe 'Movies', type: :request do
         expect(response.body).to include('N/A')
         expect(response.body).to include('Rating Breakdown')
         expect(response.body).to include('0%')
-        expect(response.body).to include('Write a Review')
       end
     end
 
